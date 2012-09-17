@@ -3,7 +3,7 @@
 No Mapgen for Minetest
 
 Copyright (c) 2012 cornernote, Brett O'Donnell <cornernote@gmail.com>
-Source Code: https://github.com/cornernote/minetest-craft_guide
+Source Code: https://github.com/cornernote/minetest-no_mapgen
 License: GPLv3
 
 ]]--

@@ -28,6 +28,11 @@ minetest.register_alias("mapgen_stone_with_iron", "air")
 minetest.register_alias("mapgen_mese", "air")
 minetest.register_alias("mapgen_desert_sand", "air")
 minetest.register_alias("mapgen_desert_stone", "air")
+minetest.register_alias("mapgen_papyrus", "air")
+minetest.register_alias("mapgen_cactus", "air")
+minetest.register_alias("mapgen_torch", "air")
+minetest.register_alias("mapgen_nyancat", "air")
+minetest.register_alias("mapgen_nyancat_rainbow", "air")
 
 -- log that we started
 minetest.log("action", "[MOD]"..minetest.get_current_modname().." -- loaded from "..minetest.get_modpath(minetest.get_current_modname()))

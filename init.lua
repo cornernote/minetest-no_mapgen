@@ -1,3 +1,13 @@
+--[[
+
+No Mapgen for Minetest
+
+Copyright (c) 2012 cornernote, Brett O'Donnell <cornernote@gmail.com>
+Source Code: https://github.com/cornernote/minetest-craft_guide
+License: GPLv3
+
+]]--
+
 minetest.register_alias("mapgen_air", "air")
 minetest.register_alias("mapgen_stone", "air")
 minetest.register_alias("mapgen_tree", "air")
@@ -18,3 +28,6 @@ minetest.register_alias("mapgen_stone_with_iron", "air")
 minetest.register_alias("mapgen_mese", "air")
 minetest.register_alias("mapgen_desert_sand", "air")
 minetest.register_alias("mapgen_desert_stone", "air")
+
+-- log that we started
+minetest.log("action", "[MOD]"..minetest.get_current_modname().." -- loaded from "..minetest.get_modpath(minetest.get_current_modname()))

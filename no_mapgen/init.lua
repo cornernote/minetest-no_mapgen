@@ -46,15 +46,15 @@ if minetest.setting_getbool("mapgen_flat") then
 		for ly = minp.y, maxp.y do
 			local y = maxp.y + minp.y - ly
 			local p = {x = x, y = y, z = z}
-      -- set middle node to dirt_with_grass
+			-- set middle node to dirt_with_grass
 			if y == 0 then
 				minetest.env:add_node(p, {name="default:default:dirt_with_grass"})
 			end
-      -- set bottom nodes to stone
+			-- set bottom nodes to stone
 			if y < 0 then
 				minetest.env:add_node(p, {name="default:stone"})
 			end
-      -- if mapgen is enabled, remove top nodes
+			-- if mapgen is enabled, remove top nodes
 			if not minetest.setting_getbool("mapgen_disabled") then
 				if y > 0 then
 					minetest.env:remove_node(p)

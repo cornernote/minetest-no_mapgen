@@ -8,14 +8,16 @@ License: GPLv3
 
 ]]--
 
+local mapgen_disabled = minetest.setting_getbool("mapgen_disabled")
+local mapgen_flat = minetest.setting_getbool("mapgen_flat")
 
--- alias mapgen_* to air
-if minetest.setting_getbool("mapgen_disabled") then
+-- alias mapgen_* to air to disable map generation
+if mapgen_disabled or mapgen_flat then
 	minetest.register_alias("mapgen_air", "air")
 	minetest.register_alias("mapgen_stone", "air")
-	minetest.register_alias("mapgen_tree", "air")
-	minetest.register_alias("mapgen_leaves", "air")
-	minetest.register_alias("mapgen_apple", "air")
+	--minetest.register_alias("mapgen_tree", "air")
+	--minetest.register_alias("mapgen_leaves", "air")
+	--minetest.register_alias("mapgen_apple", "air")
 	minetest.register_alias("mapgen_water_source", "air")
 	minetest.register_alias("mapgen_dirt", "air")
 	minetest.register_alias("mapgen_sand", "air")
@@ -38,35 +40,44 @@ if minetest.setting_getbool("mapgen_disabled") then
 	minetest.register_alias("mapgen_nyancat_rainbow", "air")
 end
 
--- after generated, make the world flat
-if minetest.setting_getbool("mapgen_flat") then
+-- make the world flat
+if mapgen_flat then
+
+	-- generate flat
 	minetest.register_on_generated(function(minp, maxp)
-		for x = minp.x, maxp.x do
-		for z = minp.z, maxp.z do
-		for ly = minp.y, maxp.y do
-			local y = maxp.y + minp.y - ly
-			local p = {x = x, y = y, z = z}
-			-- set middle node to dirt_with_grass
-			if y == 0 then
-				minetest.env:add_node(p, {name="default:default:dirt_with_grass"})
+		if minp.y < 0 and maxp.y > 0 then
+			for x = minp.x, maxp.x do
+			for z = minp.z, maxp.z do
+				minetest.env:add_node({x = x, y = -1, z = z}, {name="super_flat:bedrock"})
+				minetest.env:add_node({x = x, y = 0, z = z}, {name="default:dirt_with_grass"})
 			end
-			-- set bottom nodes to stone
-			if y < 0 then
-				minetest.env:add_node(p, {name="default:stone"})
 			end
-			-- if mapgen is enabled, remove top nodes
-			if not minetest.setting_getbool("mapgen_disabled") then
-				if y > 0 then
-					minetest.env:remove_node(p)
-				end
-			end
-		end
-		end
 		end
 	end)
 	
-end
+	-- bedrock
+	minetest.register_node("no_mapgen:bedrock", {
+		description = "Bedrock",
+		tiles = {"default_cobble.png"},
+		is_ground_content = true,
+		groups = {unbreakable=1,not_in_creative_inventory=1},
+	})
 
+	-- don't let players go below y=0
+	local bedrock_timer = 1
+	minetest.register_globalstep(function(dtime)
+		bedrock_timer = bedrock_timer - dtime
+		for k,player in ipairs(minetest.get_connected_players()) do
+			if bedrock_timer < 0 then return end
+			bedrock_timer = 1
+			local pos = player:getpos()
+			if pos.y < -1 then
+				player:setpos({x=pos.x,y=3,z=pos.z})
+			end
+		end
+	end)
+
+end
 
 -- log that we started
 minetest.log("action", "[MOD]"..minetest.get_current_modname().." -- loaded from "..minetest.get_modpath(minetest.get_current_modname()))

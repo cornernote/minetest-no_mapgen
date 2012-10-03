@@ -48,7 +48,7 @@ if mapgen_flat then
 		if minp.y < 0 and maxp.y > 0 then
 			for x = minp.x, maxp.x do
 			for z = minp.z, maxp.z do
-				minetest.env:add_node({x = x, y = -1, z = z}, {name="super_flat:bedrock"})
+				minetest.env:add_node({x = x, y = -1, z = z}, {name="no_mapgen:bedrock"})
 				minetest.env:add_node({x = x, y = 0, z = z}, {name="default:dirt_with_grass"})
 			end
 			end
@@ -67,12 +67,21 @@ if mapgen_flat then
 	local bedrock_timer = 1
 	minetest.register_globalstep(function(dtime)
 		bedrock_timer = bedrock_timer - dtime
+		if bedrock_timer > 0 then return end
 		for k,player in ipairs(minetest.get_connected_players()) do
-			if bedrock_timer < 0 then return end
 			bedrock_timer = 1
 			local pos = player:getpos()
-			if pos.y < -1 then
+			if pos.y < 0 then
+				-- teleport them back to y=3
 				player:setpos({x=pos.x,y=3,z=pos.z})
+				-- build some ground under them
+				if minetest.env:get_node({x=pos.x,y=-1,z=pos.z}).name == "air" then
+					for x=-2,2 do
+					for z=-2,2 do
+						minetest.env:set_node({x=pos.x+x,y=-1,z=pos.z+z}, {name="no_mapgen:bedrock"})
+					end
+					end
+				end
 			end
 		end
 	end)

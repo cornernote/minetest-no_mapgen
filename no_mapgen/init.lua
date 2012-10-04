@@ -45,11 +45,11 @@ if mapgen_flat then
 
 	-- generate flat
 	minetest.register_on_generated(function(minp, maxp)
-		if minp.y < 0 and maxp.y > 0 then
+		if minp.y >= -40 and minp.y <= 40 then
 			for x = minp.x, maxp.x do
 			for z = minp.z, maxp.z do
-				minetest.env:add_node({x = x, y = -1, z = z}, {name="no_mapgen:bedrock"})
-				minetest.env:add_node({x = x, y = 0, z = z}, {name="default:dirt_with_grass"})
+				minetest.env:add_node({x = x, y = 0, z = z}, {name="no_mapgen:bedrock"})
+				minetest.env:add_node({x = x, y = 1, z = z}, {name="default:dirt_with_grass"})
 			end
 			end
 		end
@@ -75,10 +75,10 @@ if mapgen_flat then
 				-- teleport them back to y=3
 				player:setpos({x=pos.x,y=3,z=pos.z})
 				-- build some ground under them
-				if minetest.env:get_node({x=pos.x,y=-1,z=pos.z}).name == "air" then
+				if minetest.env:get_node({x=pos.x,y=0,z=pos.z}).name == "air" then
 					for x=-2,2 do
 					for z=-2,2 do
-						minetest.env:set_node({x=pos.x+x,y=-1,z=pos.z+z}, {name="no_mapgen:bedrock"})
+						minetest.env:set_node({x=pos.x+x,y=0,z=pos.z+z}, {name="no_mapgen:bedrock"})
 					end
 					end
 				end

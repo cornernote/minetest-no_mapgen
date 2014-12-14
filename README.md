@@ -13,7 +13,7 @@ Generate a world with only air.
 
 - **[Documentation](http://cornernote.github.io/minetest-no_mapgen)**
 - **[GitHub Project](https://github.com/cornernote/minetest-no_mapgen)**
-- **[Minetest Forum](http://minetest.net/forum/viewtopic.php?id=3204)**
+- **[Minetest Forum](https://forum.minetest.net/viewtopic.php?id=3204)**
 
 
 ## Support

@@ -11,33 +11,11 @@ License: BSD-3-Clause https://raw.github.com/cornernote/minetest-no_mapgen/maste
 local mapgen_disabled = minetest.setting_getbool("mapgen_disabled")
 local mapgen_flat = minetest.setting_getbool("mapgen_flat")
 
--- alias mapgen_* to air to disable map generation
+-- set mapgen to singlenode
 if mapgen_disabled or mapgen_flat then
-	minetest.register_alias("mapgen_air", "air")
-	minetest.register_alias("mapgen_stone", "air")
-	--minetest.register_alias("mapgen_tree", "air")
-	--minetest.register_alias("mapgen_leaves", "air")
-	--minetest.register_alias("mapgen_apple", "air")
-	minetest.register_alias("mapgen_water_source", "air")
-	minetest.register_alias("mapgen_dirt", "air")
-	minetest.register_alias("mapgen_sand", "air")
-	minetest.register_alias("mapgen_gravel", "air")
-	minetest.register_alias("mapgen_clay", "air")
-	minetest.register_alias("mapgen_lava_source", "air")
-	minetest.register_alias("mapgen_cobble", "air")
-	minetest.register_alias("mapgen_mossycobble", "air")
-	minetest.register_alias("mapgen_dirt_with_grass", "air")
-	minetest.register_alias("mapgen_junglegrass", "air")
-	minetest.register_alias("mapgen_stone_with_coal", "air")
-	minetest.register_alias("mapgen_stone_with_iron", "air")
-	minetest.register_alias("mapgen_mese", "air")
-	minetest.register_alias("mapgen_desert_sand", "air")
-	minetest.register_alias("mapgen_desert_stone", "air")
-	minetest.register_alias("mapgen_papyrus", "air")
-	minetest.register_alias("mapgen_cactus", "air")
-	minetest.register_alias("mapgen_torch", "air")
-	minetest.register_alias("mapgen_nyancat", "air")
-	minetest.register_alias("mapgen_nyancat_rainbow", "air")
+    minetest.register_on_mapgen_init(function(mgparams)
+        minetest.set_mapgen_params({mgname="singlenode", water_level=-32000})
+    end)
 end
 
 -- make the world flat

@@ -2,6 +2,10 @@
 
 Generate a world with only air.
 
+## PLEASE NOTE
+
+This mod has been replaced by a built-in mapgen mode called singlenode.
+
 
 ## Features
 

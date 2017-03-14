@@ -8,6 +8,9 @@ License: BSD-3-Clause https://raw.github.com/cornernote/minetest-no_mapgen/maste
 
 ]]--
 
+minetest.set_mapgen_params({mgname = "singlenode", flags = "nolight", water_level = -31000})
+
+--[[
 local mapgen_disabled = minetest.setting_getbool("mapgen_disabled")
 local mapgen_flat = minetest.setting_getbool("mapgen_flat")
 
@@ -65,6 +68,7 @@ if mapgen_flat then
 	end)
 
 end
+]]--
 
 -- log that we started
 minetest.log("action", "[MOD]"..minetest.get_current_modname().." -- loaded from "..minetest.get_modpath(minetest.get_current_modname()))
